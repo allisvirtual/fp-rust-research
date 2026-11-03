@@ -1,22 +1,25 @@
 //! Mergesort in Rust, using list recursion and pattern matching.
 //! Owner: Alea Munnik
+use std::iter::once;
 
 pub fn demo() {
     let v = vec![5, 2, 9, 1, 3];
     println!("merge_sort   {:?}", merge_sort(&v));
 }
 
-fn merge<T: PartialOrd + Clone>(left: &[T], right: &[T]) -> Vec<T> {
+pub fn merge<T: PartialOrd + Clone>(left: &[T], right: &[T]) -> Vec<T> {
     match (left, right) {
-        ([], r) => r.to_vec(),
-        (l, []) => l.to_vec(),
-        ([lh, lt @ ..], [rh, rt @ ..]) => {
-            if lh <= rh {
-                std::iter::once(lh.clone())
-                    .chain(merge(lt, right))
+        ([], _) => right.to_vec(),
+        (_, []) => left.to_vec(),
+        ([first_left, rest_left @ ..], [first_right, rest_right @ ..]) => {
+            if first_left <= first_right {
+                once(first_left.clone())
+                    .chain(merge(rest_left, right))
                     .collect()
             } else {
-                std::iter::once(rh.clone()).chain(merge(left, rt)).collect()
+                once(first_right.clone())
+                    .chain(merge(left, rest_right))
+                    .collect()
             }
         }
     }
