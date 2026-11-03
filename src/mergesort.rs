@@ -1,6 +1,9 @@
-fn main() {
+//! Mergesort in Rust, using list recursion and pattern matching.
+//! Owner: Alea Munnik
+
+pub fn demo() {
     let v = vec![5, 2, 9, 1, 3];
-    println!("{:?}", merge_sort(&v));
+    println!("merge_sort   {:?}", merge_sort(&v));
 }
 
 fn merge<T: PartialOrd + Clone>(left: &[T], right: &[T]) -> Vec<T> {
@@ -19,7 +22,7 @@ fn merge<T: PartialOrd + Clone>(left: &[T], right: &[T]) -> Vec<T> {
     }
 }
 
-fn merge_sort<T: PartialOrd + Clone>(list: &[T]) -> Vec<T> {
+pub fn merge_sort<T: PartialOrd + Clone>(list: &[T]) -> Vec<T> {
     match list {
         [] | [_] => list.to_vec(),
         _ => {
